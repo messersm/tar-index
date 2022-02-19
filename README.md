@@ -34,7 +34,7 @@ filesystem by first saving the index into memory or unto another filesystem.
 ## File format
 
 ### Internal and external indexes
-A ``tarfs`` index holds exactly the same data whether its part of an
+A ``tarfs`` index holds exactly the same data whether it's part of an
 ``tarfs`` archive or provided externally.
 Concatenating a tar archive with an ``tarfs`` index as its only member
 and a the tar archive, which is described by the index **must** result
