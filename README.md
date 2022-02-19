@@ -69,8 +69,8 @@ but operation may be less efficient.
 | Field offset | Field size | Field                               |
 |:------------:|:----------:|:-----------------------------------:|
 | 0            |   10       | ``.tar-index``                      |
-| 11           |   24       | version                             |
-|  ...         | ...        | index data<br/> (version dependent) |
+| 11           |   14       | version                             |
+| 26           | ...        | index data<br/> (version dependent) |
 </div>
 
 ### Index v1.0
@@ -97,8 +97,8 @@ The ``tarfs`` index version ``v1.0`` has the following layout:
 | Field offset | Field size | Field                |
 |:------------:|:----------:|:--------------------:|
 | 0            |   10       | ``.tar-index``       |
-| 11           |   24       | ``v1.0`` + 10 spaces |
-| 25           |   488      | reserved             |
+| 11           |   14       | ``v1.0`` + 10 spaces |
+| 26           |   488      | reserved             |
 | 512          |   512      | member 1 info        |
 | 1024         |   512      | member 2 info        |
 | ...          | ...        | ...                  |
