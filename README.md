@@ -72,6 +72,9 @@ A program implementing the ``tarfs`` extension may therefore:
 
 One example which lead to there considerations are the GNU tar extension
 for [archive labels](https://www.gnu.org/software/tar/manual/html_node/label.html#label).
+These labels must be present in the first member for the ``--test-label``
+option to work and since replacing the label with an index seems like a very bad
+idea, some flexibility seems in order.
 
 > Note: Before implementing 4. it might be helpful to find some consensus
 > how the index should be flagged.
