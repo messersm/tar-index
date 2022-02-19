@@ -64,18 +64,18 @@ but operation may be less efficient.
 
 ### Index layout
 
-<center>
+<div align="center">
 
 | Field offset | Field size | Field                               |
 |:------------:|:----------:|:-----------------------------------:|
 | 0            |   10       | ``.tar-index``                      |
 | 11           |   24       | version                             |
 |  ...         | ...        | index data<br/> (version dependent) |
-</center>
+</div>
 
 ### Index v1.0
-An index v1.0 file is which can be used to access *n* members of a tar
-archive has the size *(n + 1) * 512* Byte.
+An index v1.0 file that can be used to access *n* members of a tar
+archive has the size ``(n + 1) * 512`` Byte.
 
 The first 512 Bytes contain meta-data for the index file such as the
 index version and space for future features.
@@ -92,7 +92,7 @@ Thus a ``tarfs`` index contains the same data independent of whether it's
 part of the ``tarfs`` archive or provided as an external file (as stated above).
 
 The ``tarfs`` index version ``v1.0`` has the following layout:
-<center>
+<div align="center">
 
 | Field offset | Field size | Field                |
 |:------------:|:----------:|:--------------------:|
@@ -102,7 +102,7 @@ The ``tarfs`` index version ``v1.0`` has the following layout:
 | 512          |   512      | member 1 info        |
 | 1024         |   512      | member 2 info        |
 | ...          | ...        | ...                  |
-</center>
+</div>
 
 #### Member Info Block
 The member info block has the same format as a tar
@@ -112,7 +112,7 @@ which is replaced by a field holding the checksum *and* the member offset.
 Because the checksum is saved as octal in tar member headers we can store
 additional information when saving it as binary:
 
-<center>
+<div align="center">
 
 | Field offset | Field size | Field      | Format        |
 |:------------:|:----------:|:----------:|:-------------:|
@@ -121,20 +121,20 @@ additional information when saving it as binary:
 | 155          |     1      | Space      |               |
 
 (original)
-</center>
+</div>
 
-Since $8^6 = 262144 = 2^{18}$ the checksum can be represented by 18 Bits
+Since ``8^6 = 262144 = 2^18`` the checksum can be represented by 18 Bits
 in binary (which is rounded up to 3 Bytes), resulting in the following
 adjusted fields:
 
-<center>
+<div align="center">
 
 | Field offset | Field size | Field            | Format                       |
 |:------------:|:----------:|:----------------:|:----------------------------:|
 | 148          |     5      | Member position  | Unsigned integer, big endian |
 | 153          |     3      | Checksum         | Unsigned integer, big endian |
 
-</center>
+</div>
 
 > Note: Technically the checksum could be fully removed from the index,
 > since it's also present in the indexed tar archive,
@@ -150,7 +150,7 @@ Because tar archive members are aligned to 512 Byte blocks,
 the position of a member can be represented as the block number
 (after the index).
 With 5 Bytes available for the member position we can address
-$2^{5*8} = 1099511627776$ blocks thus covering tar archives up to 512TB
+``2^{5*8} = 1099511627776`` blocks thus covering tar archives up to 512TB
 data (after the index).
 The member position points the member *header* not the member *data*.
 So the position for the member directly following the index is ``0`` (it would be ``1``, if we point to the member data).
