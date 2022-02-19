@@ -14,9 +14,9 @@ This information includes the offset of the member in the tar archive and
 thus can be used to directly seek to the position of an indexed member
 instead of the need to process all preceding members of the archive.
 
-For new tar archives this index can be included as the *first* member
-in the archive, or the index can be added later by replacing the first
-member(s) of the archive with the index while appending the replaced members
+For new tar archives this index can be included *at the start*
+of the archive, or the index can be added later by replacing member(s) at the
+start of the archive with the index while appending the replaced members
 at the end of the archive.
 If the tar archive cannot or should not be modified the index can still
 be used by providing it via a file external to the archive.
@@ -49,8 +49,34 @@ $ tar -cf archive.tar .tarfs
 $ tar -Af archive.tar files.tar
 ```
 
-### Versioning
+### Placement of the internal index
+The main intent of the ``tarfs`` extension is to provide additional
+functionality for already existing technologies and data.
+Because the index member merely improves performance when handling the archive,
+and no data is lost, when an index cannot be found,
+some practical considerations concerning the meaning of "start of the archive"
+seem in order.
 
+A program implementing the ``tarfs`` extension may therefore:
+ 1. Provide an option to define, how many members at the start of the
+    archive should be inspected when searching for the index.
+    This value **should** default to ``1``.
+ 2. If no such option is given, the program **should** only inspect the
+    first member.
+ 3. If the program is aware of the ``ustar``-extension for tar files,
+    it **may** skip special files (with a type flag, which doesn't include
+    ``NUL, '0'-'7'``) while searching for the "first" member.
+ 4. If the program is aware of the ``ustar``-extension it **may** mark
+    the index file itself with a special type flag, so that other programs
+    may exclude it when extracting files.
+
+One example which lead to there considerations are the GNU tar extension
+for [archive labels](https://www.gnu.org/software/tar/manual/html_node/label.html#label).
+
+> Note: Before implementing 4. it might be helpful to find some consensus
+> how the index should be flagged.
+
+### Versioning
 As a general rule the version of an ``tarfs``-Archive is derived from
 the version of the contained index.
 That means no extra information is present in the ``.tarfs`` member header
