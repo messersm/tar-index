@@ -150,7 +150,8 @@ Because tar archive members are aligned to 512 Byte blocks,
 the position of a member can be represented as the block number
 (after the index).
 With 5 Bytes available for the member position we can address
-``2^{5*8} = 1099511627776`` blocks thus covering tar archives up to 512TB
+``2^(5*8) = 1099511627776`` blocks thus covering tar archives up to 512TB
 data (after the index).
 The member position points the member *header* not the member *data*.
-So the position for the member directly following the index is ``0`` (it would be ``1``, if we point to the member data).
+So the position for the member directly following the index is ``0``
+(it would be ``1``, if we point to the member data).
